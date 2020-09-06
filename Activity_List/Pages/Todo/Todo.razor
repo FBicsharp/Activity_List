@@ -1,0 +1,61 @@
+﻿@page "/todo"
+@inherits TodoBase
+<h1 class="accordion">Todo</h1>
+
+@if (todos.Count > 0)
+{
+
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Group</th>
+                    <th>Description</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var todo in todos)
+                {
+                    <tr>
+                        <td>@todo.Group</td>
+                        <td>@todo.Description</td>
+                        <td >
+                            <div class="select">
+
+                            <select  @bind="@todo.State">
+                                    @foreach (var states in Enum.GetValues(typeof(TaskState)))
+                                    {
+                                        <option class="option" value="@states">@states</option>
+                                    }
+                                
+                            </select>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    
+}
+else
+{
+    <p style="text-align:center;"><em>There is not task to do</em></p>
+}
+
+<div id="add-todo">
+
+    <h5 class="h5-todo"> Group </h5>
+    <input class="border-bottom-input input-shadow rounded-input" id="AddGroup" placeholder="ex. My interest" @bind="newTodo.Group" />
+    <br />
+    <h5 class="h5-todo"> Description</h5>
+    <input class="border-bottom-input input-shadow rounded-input" id="AddDescription" placeholder="ex. Do somestuff" @bind="newTodo.Description" />
+    <br />
+
+    <button class="Add" @onclick="AddItemToList">+</button>
+
+</div>
